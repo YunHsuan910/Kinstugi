@@ -575,6 +575,40 @@ p {
   }
 }
 
+@-webkit-keyframes television {
+  0% {
+    opacity: 0;
+    -webkit-transform: scaleY(0);
+            transform: scaleY(0);
+    -webkit-filter: brightness(0.5);
+            filter: brightness(0.5);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+    -webkit-filter: brightness(1.5);
+            filter: brightness(1.5);
+  }
+}
+
+@keyframes television {
+  0% {
+    opacity: 0;
+    -webkit-transform: scaleY(0);
+            transform: scaleY(0);
+    -webkit-filter: brightness(0.5);
+            filter: brightness(0.5);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+    -webkit-filter: brightness(1.5);
+            filter: brightness(1.5);
+  }
+}
+
 .text-gold {
   color: #c5a059;
 }
@@ -780,8 +814,16 @@ h2 {
 }
 
 .ceremony-container .process-content .animate-wrap {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   padding: 0;
   overflow: hidden;
+}
+
+.ceremony-container .process-content .animate-wrap img {
+  -webkit-animation: television 0.8s ease-in-out;
+          animation: television 0.8s ease-in-out;
 }
 
 .ceremony-container .result-content {

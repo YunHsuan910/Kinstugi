@@ -19,7 +19,7 @@ import { generatePrompt } from "../services/generatePrompt";
 
 function CeremonyPage() {
   // 頁面流程狀態：input (輸入), process (生成中), result (結果)
-  const [step, setStep] = useState("input");
+  const [step, setStep] = useState("process");
 
   // 要上傳的檔案類別：text (文字, image (圖片)
   const [inputType, setInputType] = useState("text");

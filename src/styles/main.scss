@@ -164,8 +164,12 @@ h2 {
             margin: Min(2.5vh, 2.5vw) 0;
         }
         .animate-wrap {
+            height: fit-content;
             padding: 0;
             overflow: hidden;
+            img {
+                animation: television 0.8s ease-in-out;
+            }
         }
     }
     .result-content {
@@ -238,14 +242,14 @@ h2 {
             justify-content: space-between;
             align-items: center;
             background-color: $color-primary-gold;
-            padding: Min(1vh,1vw) Min(1.2vh,1.2vw);
+            padding: Min(1vh, 1vw) Min(1.2vh, 1.2vw);
             border-radius: 0.5em;
             input {
                 flex-grow: 1;
                 background: transparent;
                 outline: none;
                 border: none;
-                margin-right: Min(1.2vh,1.2vw);
+                margin-right: Min(1.2vh, 1.2vw);
                 &::placeholder {
                     font-size: Min(2vh, 2vw);
                     color: $color-text-placeholder;
