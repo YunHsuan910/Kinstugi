@@ -1,9 +1,12 @@
 /* eslint-disable no-unused-vars */
+import { useNavigate } from "react-router-dom";
 import React from "react";
 import { motion } from "motion/react";
 import EnterTrigger from "./EnterTrigger";
 
 function LoginForm({ onSwitchToRegister }) {
+  const navigate = useNavigate();
+
   return (
     <motion.main
       className="main-content"
@@ -49,8 +52,11 @@ function LoginForm({ onSwitchToRegister }) {
             </span>
           </div>
           <div className="change-view-btn-wrap">
-            <div className="form-item form-text change-view-btn">
-              忘記密碼？
+            <div
+              className="form-item form-text change-view-btn"
+              onClick={() => navigate("/ceremony")}
+            >
+              訪客登入
             </div>
             <span className="divider-line"></span>
             <div

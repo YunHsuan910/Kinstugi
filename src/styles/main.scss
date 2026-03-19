@@ -18,8 +18,15 @@ h2 {
     letter-spacing: 0.2em;
 }
 .container:not(.landing-container) {
+    box-sizing: border-box;
+    padding: Min(3vh, 8vw) 0;
+    min-height: 100dvh;
+    height: max-content;
+    display: flex;
+    justify-content: space-evenly;
     .title {
-        max-width: Min(70vh, 70vw);
+        max-width: Min(70vh, 85vw);
+        max-height: 20vh;
         .slogan {
             width: 100%;
         }
@@ -28,6 +35,7 @@ h2 {
 .landing-container {
     overflow: hidden;
     .title {
+        max-width: min-content;
         padding-bottom: 25vh;
         .slogan {
             font-size: Min(3vh, 3vw);
@@ -36,6 +44,7 @@ h2 {
     }
     .main-content {
         height: 32dvh;
+        padding-bottom: 8vh;
         h2 {
             text-align: center;
             margin: 0 auto;
@@ -54,7 +63,7 @@ h2 {
 
 .gate-container {
     .main-content {
-        height: 68vh;
+        height: max-content;
         justify-content: space-between;
         .content-text {
             line-height: Min(8vh, 8vw);
@@ -75,7 +84,7 @@ h2 {
     }
     .main-content {
         margin-top: Min(3vh, 3vw);
-        height: stretch;
+        // height: auto;
         .form-item-top {
             .form-label {
                 max-width: 100%;
@@ -280,7 +289,7 @@ h2 {
             }
             .control-btns-wrap {
                 width: 100%;
-                margin: Min(3vh, 3vw);
+                margin: Min(3vh, 3vw) 0;
                 max-width: Min(90vw, 70em);
                 display: flex;
                 justify-content: center;
@@ -315,6 +324,44 @@ h2 {
                 }
                 .prev-btn {
                     transform: scaleX(-1);
+                }
+            }
+        }
+    }
+}
+.about-container {
+    .about-content {
+        padding: 0;
+        text-align-last: left;
+        display: flex;
+        align-items: center;
+        .photo {
+            width: 100%;
+            max-width: Min(90vw, 35vh);
+            // margin: Min(3vh,3vw) 0;
+        }
+        .words {
+            width: 100%;
+            max-width: Min(90vw, 50vh);
+        }
+        .secret-mail {
+            .mail {
+                font-size: Min(2vh, 3vw);
+                display: flex;
+                animation: reveal 0.5s ease-in-out;
+            }
+            .hide-mail {
+                display: block;
+            }
+            .reveal-mail {
+                display: none;
+            }
+            &:hover {
+                .hide-mail {
+                    display: none;
+                }
+                .reveal-mail {
+                    display: block;
                 }
             }
         }

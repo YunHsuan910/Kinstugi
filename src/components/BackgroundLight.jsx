@@ -1,7 +1,7 @@
 import React from "react";
-import bg from "../assets/bg-dark.webp";
+import bg from "../assets/bg-light.webp";
 
-function Background() {
+function BackgroundLight() {
   return (
     <div className="bg-wrap">
       <img className="bg" src={bg} alt="" />
@@ -9,4 +9,4 @@ function Background() {
   );
 }
 
-export default Background;
+export default BackgroundLight;

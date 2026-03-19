@@ -13,7 +13,7 @@ import RegisterForm from "../components/RegisterForm";
 
 function GatePage() {
   const [view, setView] = useState("intro");
-  // const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
   return (
     <motion.div
@@ -45,9 +45,8 @@ function GatePage() {
             祝福你有跨越一切的勇氣
           </motion.p>
           <EnterTrigger
-            targetPath={"/ceremony"}
-            onComplete={null}
-            // onComplete={() => setView("login")}
+            targetPath={null}
+            onComplete={() => setView("login")}
             mainText="簽訂契約"
             subText="REGISTER"
           />

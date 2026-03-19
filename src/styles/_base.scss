@@ -46,16 +46,138 @@ h3 {
     font-weight: 500;
 }
 p {
-    font-size: Min(3vh, 3vw);
+    font-size: Min(2.5vh, 5vw);
 }
 .main-text {
-    font-size: Min(2vh, 2.5vw);
+    font-size: Min(2vh, 3.5vw);
 }
 .sub-text {
-    font-size: Min(1.5vh, 2vw);
+    font-size: Min(1.5vh, 2.5vw);
 }
 .form-text {
-    font-size: Min(2vh, 3vw);
+    font-size: Min(2vh, 5vw);
+}
+.menu {
+    position: fixed;
+    z-index: 5;
+    top: 0;
+    right: 0;
+    .icon-wrap {
+        position: fixed;
+        top: Min(3vh, 3vw);
+        right: Min(3vh, 3vw);
+        width: Min(4vh, 6vw);
+        height: Min(3.5vh, 5.5vw);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        z-index: 10;
+        &:hover {
+            .bar {
+                background-color: $color-primary-gold;
+                box-shadow:
+                    inset 0 1px 0 0.2px rgba($color: $color-primary-gold, $alpha: 0.8),
+                    inset 0 2px 0 0 rgba($color: #d08e0a, $alpha: 0.8),
+                    inset 2px 0 0 0.2px rgba($color: #ffffb9, $alpha: 0.8),
+                    inset -2px 0 0 0.2px rgba($color: #ffffb9, $alpha: 0.8),
+                    inset 0 2.5px 0 0.2px rgba($color: #ffffb9, $alpha: 0.8),
+                    inset 3px 0 0 0.2px rgba($color: #d08e0a, $alpha: 0.8),
+                    inset -3px 0 0 0.2px rgba($color: #d08e0a, $alpha: 0.8),
+                    inset 0 -3.5px 0 0.2px rgba($color: #9a6c11, $alpha: 0.5),
+                    inset 0 -3px 0 0.2px rgba($color: #d08e0a, $alpha: 0.5);
+            }
+        }
+        .bar {
+            width: 100%;
+            height: Min(0.7vh, 0.8vw);
+            border-radius: 99em;
+            transition: all 0.2s;
+            background-color: $color-primary-black;
+            box-shadow:
+                inset 0 1px 0 0.2px rgba($color: $color-primary-black, $alpha: 0.5),
+                inset 0 2px 0 0 rgba($color: #2f2f2f, $alpha: 0.5),
+                inset 2px 0 0 0.2px rgba($color: #6d6d6d, $alpha: 0.3),
+                inset -2px 0 0 0.2px rgba($color: #6d6d6d, $alpha: 0.3),
+                inset 0 2.5px 0 0.2px rgba($color: #6d6d6d, $alpha: 0.8),
+                inset 3px 0 0 0.2px rgba($color: #2f2f2f, $alpha: 0.5),
+                inset -3px 0 0 0.2px rgba($color: #2f2f2f, $alpha: 0.5),
+                inset 0 -3.5px 0 0.2px rgba($color: #000, $alpha: 0.3),
+                inset 0 -3px 0 0.2px rgba($color: #2f2f2f, $alpha: 0.3);
+        }
+    }
+
+    .nav-wrap {
+        display: none;
+        overflow: hidden;
+        z-index: 5;
+    }
+}
+.menu.open {
+    height: 100dvh;
+    .icon-wrap {
+        .bar {
+            position: absolute;
+            background-color: $color-primary-gold;
+            box-shadow:
+                inset 0 1px 0 0.2px rgba($color: $color-primary-gold, $alpha: 0.8),
+                inset 0 2px 0 0 rgba($color: #d08e0a, $alpha: 0.8),
+                inset 2px 0 0 0.2px rgba($color: #ffffb9, $alpha: 0.8),
+                inset -2px 0 0 0.2px rgba($color: #ffffb9, $alpha: 0.8),
+                inset 0 2.5px 0 0.2px rgba($color: #ffffb9, $alpha: 0.8),
+                inset 3px 0 0 0.2px rgba($color: #d08e0a, $alpha: 0.8),
+                inset -3px 0 0 0.2px rgba($color: #d08e0a, $alpha: 0.8),
+                inset 0 -3.5px 0 0.2px rgba($color: #9a6c11, $alpha: 0.5),
+                inset 0 -3px 0 0.2px rgba($color: #d08e0a, $alpha: 0.5);
+        }
+        .bar:nth-of-type(1) {
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg);
+        }
+        .bar:nth-of-type(2) {
+            opacity: 0;
+        }
+        .bar:nth-of-type(3) {
+            top: 50%;
+            transform: translateY(-50%) rotate(-45deg);
+        }
+    }
+
+    .nav-wrap {
+        padding: Min(10vh, 15vw) Min(3vh, 3vw);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        background-color: rgba($color: $color-primary-black, $alpha: 0.9);
+        animation: reveal 0.3s ease-in-out;
+        .nav-item {
+            position: relative;
+            padding: Min(1vh, 1vw) 0;
+            cursor: pointer;
+            transition: all 0.2s;
+            animation: slideInRight 0.2s ease-in;
+            text-align: center;
+            letter-spacing: Min(0.3vh, 0.3vw);
+            font-size: Min(2vh, 5vw);
+            color: #fff;
+            &:hover {
+                filter: brightness(1.4);
+                text-shadow: 0 0 2px $color-primary-gold;
+                &::after {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 2px;
+                    background-color: $color-primary-gold;
+                    animation: extend 0.2s ease-in;
+                }
+            }
+        }
+    }
 }
 .container {
     width: 100dvw;
@@ -69,7 +191,7 @@ p {
 .title {
     flex-grow: 1;
     margin: 0 auto;
-    padding: 0 $page-side-padding;
+    // padding: 0 $page-side-padding;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -82,8 +204,9 @@ p {
         object-fit: contain;
     }
     .slogan {
+        width: 100%;
         max-width: 100%;
-        font-size: Min(2.5vh, 3vw);
+        font-size: Min(2.5vh, 5vw);
         max-height: 6vh;
         word-break: keep-all;
         word-wrap: break-word;
@@ -103,7 +226,7 @@ p {
     flex-direction: column;
     justify-content: flex-end;
     margin: 0 auto;
-    padding: 0 $page-side-padding 8vh;
+    padding: 0 $page-side-padding;
     width: 100%;
     .content-text {
         word-wrap: break-word;
@@ -232,7 +355,7 @@ p {
         margin: 1vh auto 0;
         color: $color-text-accent-gray;
         * {
-            letter-spacing: Min(0.4vh, 1vw);
+            letter-spacing: Min(0.4vh, 0.7vw);
             text-indent: Min(0.4vh, 1vw);
         }
         .main-text {

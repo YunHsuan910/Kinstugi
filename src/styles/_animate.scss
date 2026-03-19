@@ -33,15 +33,43 @@
         transform: scale(0.9);
     }
 }
-@keyframes television{
-    0%{
+@keyframes television {
+    0% {
         opacity: 0;
         transform: scaleY(0);
         filter: brightness(0.5);
     }
-    100%{
+    100% {
         opacity: 1;
         transform: scaleY(1);
         filter: brightness(1.5);
+    }
+}
+@keyframes reveal {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes extend {
+    0% {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scaleX(1);
     }
 }

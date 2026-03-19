@@ -16,7 +16,7 @@ let currentSession;
 
 // 在 global 宣告緩衝區
 const MIN_PLAY_SIZE = SAMPLE_RATE * 4 * 0.5; // 累積 0.5 秒雙聲道數據
-const TOTAL_TARGET_SIZE = MIN_PLAY_SIZE * 60; // 預計生成 30 秒音樂
+const TOTAL_TARGET_SIZE = MIN_PLAY_SIZE * 20; // 預計生成 10 秒音樂
 
 let allSamples = []; // 儲存 30 秒的所有樣本
 let loopSource = null;

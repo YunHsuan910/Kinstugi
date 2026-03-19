@@ -13,7 +13,7 @@ import { getAllMemoriesFromDB } from "../services/dbService";
 
 function CollectionPage() {
   const [memories, setMemories] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchMemories = async () => {
@@ -23,7 +23,7 @@ function CollectionPage() {
       } catch (error) {
         console.error("讀取記憶失敗:", error);
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     };
     fetchMemories();
@@ -36,9 +36,7 @@ function CollectionPage() {
         <p className="slogan">收藏昔日裂痕，喚醒此刻金韻</p>
       </div>
 
-      {loading ? (
-        <p className="form-text">感應中...</p>
-      ) : memories.length > 0 ? (
+      {memories.length > 0 ? (
         <HasCollections items={memories} />
       ) : (
         <NoCollection />

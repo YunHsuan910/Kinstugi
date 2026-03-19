@@ -7,7 +7,7 @@ import title from "../assets/ceremony-title.png";
 
 //組件匯入
 import EnterTrigger from "../components/EnterTrigger";
-import Background from "../components/Background";
+import BackgroundLight from "../components/BackgroundLight";
 import AutoResizeTextarea from "../components/AutoResizeTextarea";
 import ImageUpload from "../components/ImageUpload";
 import RecordProcessing from "../components/RecordProcessing";
@@ -169,7 +169,7 @@ function CeremonyPage() {
         />
       )}
 
-      <Background />
+      <BackgroundLight />
     </motion.div>
   );
 }
