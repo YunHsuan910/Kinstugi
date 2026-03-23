@@ -111,7 +111,7 @@ h2 {
             width: 100%;
             textarea {
                 display: block;
-                box-sizing: content-box;
+                box-sizing: border-box;
                 min-height: 10vh;
                 overflow-y: hidden;
             }
@@ -220,10 +220,10 @@ h2 {
 .collection-container {
     .nodata-content {
         margin: 0 auto;
-        max-width: Min(70vw, 70em);
+        max-width: Min(70vw, 50em);
         .record-img {
             width: 100%;
-            max-width: Min(70vw, 30vh);
+            max-width: Min(50vw, 30vh);
             margin: 0 auto;
             display: flex;
             justify-content: center;

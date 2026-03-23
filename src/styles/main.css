@@ -1056,8 +1056,8 @@ h2 {
 
 .ceremony-container .main-content .memory-content textarea {
   display: block;
-  -webkit-box-sizing: content-box;
-          box-sizing: content-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   min-height: 10vh;
   overflow-y: hidden;
 }
@@ -1212,12 +1212,12 @@ h2 {
 
 .collection-container .nodata-content {
   margin: 0 auto;
-  max-width: Min(70vw, 70em);
+  max-width: Min(70vw, 50em);
 }
 
 .collection-container .nodata-content .record-img {
   width: 100%;
-  max-width: Min(70vw, 30vh);
+  max-width: Min(50vw, 30vh);
   margin: 0 auto;
   display: -webkit-box;
   display: -ms-flexbox;
