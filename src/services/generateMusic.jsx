@@ -16,7 +16,7 @@ let currentSession;
 
 // 在 global 宣告緩衝區
 const MIN_PLAY_SIZE = SAMPLE_RATE * 4 * 0.5; // 累積 0.5 秒雙聲道數據
-const TOTAL_TARGET_SIZE = MIN_PLAY_SIZE * 20; // 預計生成 10 秒音樂
+const TOTAL_TARGET_SIZE = MIN_PLAY_SIZE * 10; // 預計生成 10 秒音樂
 
 let allSamples = []; // 儲存 30 秒的所有樣本
 let loopSource = null;
@@ -29,13 +29,13 @@ async function generateMusic(promptText) {
   return new Promise((resolve, reject) => {
     const timeout = setTimeout(() => {
       reject(new Error("生成音樂超時，請檢查網路連線"));
-    }, 30000);
+    }, 60000);
 
     let chunksArray = []; // 用來存所有的 Uint8Array 小塊
     let accumulatedLength = 0; // 追蹤總長度
 
-    // 清理舊的狀態
-    const cleanup = () => clearTimeout(timeout);
+    // allSamples = new Int16Array(0); // 每次重新金繕時清空
+    // let internalBuffer = new Uint8Array(0);
 
     if (!window.sharedAudioContext) {
       window.sharedAudioContext = new (
@@ -58,16 +58,14 @@ async function generateMusic(promptText) {
                 chunksArray.push(newData);
                 accumulatedLength += newData.length;
 
-                // 到達目標長度
                 if (accumulatedLength >= TOTAL_TARGET_SIZE) {
-                  cleanup(); // 成功了，先清除 timeout
-
+                  // 停止即時串流，避免干擾
                   if (currentSession) {
                     currentSession.stop();
                     currentSession = null;
                   }
 
-                  // 合併數據
+                  // 一次性合併所有數據
                   const fullBuffer = new Uint8Array(accumulatedLength);
                   let offset = 0;
                   for (const c of chunksArray) {
@@ -75,26 +73,26 @@ async function generateMusic(promptText) {
                     offset += c.length;
                   }
 
+                  // 關鍵修改：確保我們只取偶數長度的數據（因為 1 個 Int16 = 2 個 Uint8）
                   const length = Math.floor(fullBuffer.length / 2) * 2;
                   const slicedBuffer = fullBuffer.slice(0, length);
                   allSamples = new Int16Array(slicedBuffer.buffer);
 
-                  // 確保啟動播放不影響 resolve 流程
-                  startLoopingPlayback();
-                  resolve(true);
+                  setTimeout(() => {
+                    startLoopingPlayback();
+                    clearTimeout(timeout);
+                    resolve(true);
+                  }, 0);
                 }
               }
             }
           },
           onerror: (error) => {
-            cleanup();
             console.error("Lyria Session 錯誤:", error);
             reject(error);
           },
-          onclose: (event) => {
-            cleanup();
-            console.log("連線關閉代碼:", event.code, "理由:", event.reason);
-          },
+          onclose: (event) =>
+            console.log("連線關閉代碼:", event.code, "理由:", event.reason),
         },
       })
       .then(async (session) => {
@@ -120,7 +118,6 @@ async function generateMusic(promptText) {
         await session.play();
       })
       .catch((err) => {
-        cleanup();
         reject(err);
       });
   });
