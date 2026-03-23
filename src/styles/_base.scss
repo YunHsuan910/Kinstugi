@@ -164,7 +164,7 @@ p {
         animation: reveal 0.3s ease-in-out;
         .nav-item {
             position: relative;
-            padding: Min(1vh, 1vw) 0;
+            padding: Min(1vh, 2vw) 0;
             cursor: pointer;
             transition: all 0.2s;
             animation: slideInRight 0.2s ease-in;

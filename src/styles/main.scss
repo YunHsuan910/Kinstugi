@@ -111,6 +111,7 @@ h2 {
             width: 100%;
             textarea {
                 display: block;
+                box-sizing: content-box;
                 min-height: 10vh;
                 overflow-y: hidden;
             }
@@ -384,14 +385,17 @@ h2 {
         .words {
             width: 100%;
             max-width: Min(70vw, 50vh);
+            * {
+                font-family: $font-family-serif;
+            }
         }
         .motto {
             text-align: left;
+            font-weight: 500;
         }
         .secret-mail {
             .mail {
-                font-size: Min(2vh, 3vw);
-                font-family: $font-family-serif;
+                font-size: Min(2vh, 2.8vw);
                 font-style: italic;
                 display: flex;
                 animation: reveal 0.5s ease-in-out;
