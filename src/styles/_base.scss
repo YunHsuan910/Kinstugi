@@ -238,7 +238,8 @@ p {
     padding: Min(2vh,3vw) Min(2vh,5vw) Min(3vh,5vw);
     width: 100%;
     max-width: 50em;
-    height: stretch;
+    height: auto;
+    // height: stretch;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
