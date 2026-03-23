@@ -71,7 +71,7 @@ function CeremonyPage() {
       setStep("result");
     } catch (error) {
       console.error("金繕修復失敗:", error);
-      alert("修復過程發生錯誤，請稍後再試");
+      alert("修復過程發生錯誤，請稍後再試", error);
       setStep("input");
     }
   };
