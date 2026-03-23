@@ -63,6 +63,7 @@ function CeremonyPage() {
       setStep("result");
     } catch (error) {
       console.error("金繕修復失敗:", error);
+      alert("金繕修復失敗:", error);
       setStep("input");
     }
   };
