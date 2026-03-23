@@ -4,7 +4,7 @@ import React from "react";
 import record from "../assets/record.png";
 import recordEffect from "../assets/record-effect.png";
 
-function Record({ memoryName }) {
+function Record({ memoryName, memoryNum }) {
   return (
     <div className="main-content result-content collection-wrap">
       <div className="record-wrap">
@@ -12,7 +12,7 @@ function Record({ memoryName }) {
         <img className="record-effect" src={recordEffect} alt="唱片光效" />
       </div>
       <div className="result-card">
-        <p className="result-text memory-number">金繕印記</p>
+        <p className="result-text memory-number">金繕印記 {memoryNum}</p>
         <h2 className="result-text memory-title">{memoryName}</h2>
       </div>
     </div>

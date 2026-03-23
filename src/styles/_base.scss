@@ -256,7 +256,7 @@ p {
             align-items: center;
             flex-wrap: wrap;
             .form-label {
-                max-width: Min(10vw, 5em);
+                max-width: Min(11vw, 5em);
                 text-align: right;
                 letter-spacing: Min(0.2vw, 0.2em);
             }
@@ -277,11 +277,11 @@ p {
             }
         }
         .input-notice {
+            width: auto;
             text-align: left;
             color: $color-text-notice;
-            font-size: Min(1.6vh, 2.5vw);
-            padding-left: Min(9.8vw, 4.8em);
-            margin: 0.2vh 0;
+            font-size: Min(1.6vh, 3vw);
+            margin: 0.2vh Min(9.8vw, 4.8em);
             word-wrap: break-word;
             word-break: break-all;
         }
@@ -417,9 +417,10 @@ p {
     }
 }
 .result-card {
+    display: grid;
     margin: Min(1vh, 1vw);
     padding: 0.5em 1em;
-    width: 100%;
+    width: auto;
     height: auto;
     background-image: $color-card-gradient;
     border-radius: calc(0.5em - #{$card-border-width} / 2);
@@ -443,6 +444,10 @@ p {
         font-family: $font-family-serif;
         font-weight: 600;
         transform: scaleY(1.1);
+        -webkit-line-clamp: 1;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
     .memory-number {
         border-bottom: 1px solid $color-primary-black;

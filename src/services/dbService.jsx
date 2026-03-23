@@ -41,3 +41,14 @@ export const getAllMemoriesFromDB = async () => {
     request.onerror = () => reject(request.error);
   });
 };
+//讀取記憶ID
+export const getMemoryByIdFromDB = async (id) => {
+  const db = await initDB();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction([STORE_NAME], "readonly");
+    const store = transaction.objectStore(STORE_NAME);
+    const request = store.get(id); // 這裡使用 get(id)
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+};

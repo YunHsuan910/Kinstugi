@@ -16,18 +16,22 @@ function CollectionPage() {
   // const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchMemories = async () => {
-      try {
-        const data = await getAllMemoriesFromDB();
-        setMemories(data);
-      } catch (error) {
-        console.error("讀取記憶失敗:", error);
-      } finally {
-        // setLoading(false);
-      }
-    };
-    fetchMemories();
-  }, []);
+  const fetchMemories = async () => {
+    try {
+      const data = await getAllMemoriesFromDB();
+
+      // 關鍵：分離 Metadata，不讓 samples 佔用 React State 渲染負擔
+      const lightData = data.map(({ samples, ...rest }) => rest)
+        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+      setMemories(lightData);
+    } catch (error) {
+      console.error("讀取記憶失敗:", error);
+    }
+  };
+  fetchMemories();
+}, []);
+
 
   return (
     <div className="collection-container container">
@@ -37,7 +41,7 @@ function CollectionPage() {
       </div>
 
       {memories.length > 0 ? (
-        <HasCollections items={memories} />
+        <HasCollections memories={memories} />
       ) : (
         <NoCollection />
       )}

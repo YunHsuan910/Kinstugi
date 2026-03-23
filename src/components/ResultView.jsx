@@ -6,13 +6,13 @@ import { motion } from "framer-motion";
 import record from "../assets/record.png";
 import recordEffect from "../assets/record-effect.png";
 //匯入組件
-import Record from "../components/Record"
+import Record from "../components/Record";
 //匯入音訊服務
 import { stopMusic, getGeneratedSamples } from "../services/generateMusic";
 import { downloadMusic } from "../services/downloadMusic";
 import { saveMemoryToDB } from "../services/dbService";
 
-function ResultView({ memoryName, musicPrompt, musicData }) {
+function ResultView({ memoryName }) {
   const navigate = useNavigate();
 
   // 音樂播放的狀態
@@ -76,17 +76,19 @@ function ResultView({ memoryName, musicPrompt, musicData }) {
 
     const newMemory = {
       name: memoryName,
-      samples: samples, // 直接存儲 Int16Array
+      samples: samples,
       sampleRate: sampleRate,
       timestamp: new Date().toISOString(),
     };
 
     try {
       await saveMemoryToDB(newMemory);
-      // 成功後跳轉至典藏頁面
+      // 停止音樂，避免跳轉後背景音樂還在放（視你的設計而定）
+      stopMusic();
+      // 跳轉
       navigate("../collection");
     } catch (err) {
-      console.error("儲存失敗", err);
+      alert("儲存失敗，請檢查資料庫連線");
     }
   };
 

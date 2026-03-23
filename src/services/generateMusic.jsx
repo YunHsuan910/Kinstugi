@@ -56,7 +56,6 @@ async function generateMusic(promptText) {
                 internalBuffer = temp;
 
                 if (internalBuffer.length >= TOTAL_TARGET_SIZE) {
-                  console.log("30秒數據錄製完成");
 
                   // 停止即時串流，避免干擾
                   if (currentSession) {
@@ -70,12 +69,6 @@ async function generateMusic(promptText) {
 
                   // 重新建立一個 Int16Array，這會強制進行正確的數據映射
                   allSamples = new Int16Array(slicedBuffer.buffer);
-
-                  console.log("樣本轉換完成，長度:", allSamples.length);
-                  console.log(
-                    "第一個非零樣本檢查:",
-                    allSamples.find((s) => s !== 0),
-                  ); // 這裡應該要有數值
 
                   startLoopingPlayback();
                   resolve(true);
@@ -184,7 +177,6 @@ function startLoopingPlayback() {
   }
 
   loopSource.start(startTime); // 在 0.3 秒後精準啟動
-  console.log("播放源將於 0.3 秒後啟動...");
 }
 
 //將 Base64 字串轉換為二進位位元組陣列 (Uint8Array)
