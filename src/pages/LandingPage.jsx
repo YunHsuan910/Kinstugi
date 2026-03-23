@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 
 //圖檔匯入
@@ -12,6 +13,33 @@ import EnterTrigger from "../components/EnterTrigger";
 
 
 function LandingPage() {
+  const [videoSrc, setVideoSrc] = useState(() => {
+    return window.innerWidth <= 768 ? heroBgMobile : heroBgDesktop;
+  });
+
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    // 2. 這裡只負責監聽視窗縮放
+    const handleResize = () => {
+      const isMobile = window.innerWidth <= 768;
+      const targetSrc = isMobile ? heroBgMobile : heroBgDesktop;
+
+      // 只有當路徑真的變了才更新 State，減少不必要的渲染
+      setVideoSrc(prev => prev !== targetSrc ? targetSrc : prev);
+    };
+
+    // 3. 嘗試強制播放 (補救自動播放失敗)
+    const playPromise = videoRef.current?.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        console.log("自動播放被攔截");
+      });
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <div className="landing-container container">
       <motion.div
@@ -38,29 +66,19 @@ function LandingPage() {
         />
       </main>
       <div className="bg-wrap">
-        <video
-          className="bg-video"
-          autoPlay    // 自動播放
-          loop        // 循環播放
-          muted       // 必須靜音，否則大部分瀏覽器拒絕自動播放
-          playsInline // 關鍵：防止 iPhone 上跳出全螢幕播放器
-          poster={heroBgPoster} // 選填：在影片下載前顯示這張圖
-        >
-          {/* 電腦版 (螢幕大於 768px 時下載) */}
-          <source
-            src={heroBgDesktop}
-            type="video/mp4"
-            media="(min-width: 769px)"
+        {videoSrc && (
+          <video
+            ref={videoRef}
+            key={videoSrc} // 關鍵：確保切換時會重新載入
+            className="bg-video"
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster={heroBgPoster}
+            src={videoSrc} // 直接寫在這裡，不要用 <source>
           />
-
-          {/* 手機版 (螢幕小於或等於 768px 時下載) */}
-          <source
-            src={heroBgMobile}
-            type="video/mp4"
-            media="(max-width: 768px)"
-          />
-
-        </video>
+        )}
         {/* <img className="bg-video" src={heroBg} alt="" /> */}
       </div>
     </div>
