@@ -41,6 +41,14 @@ function CeremonyPage() {
 
   // 生成音樂
   const handleStartRepair = async () => {
+    // 優先解鎖音訊，防止手機版靜音或報錯
+    if (
+      window.sharedAudioContext &&
+      window.sharedAudioContext.state === "suspended"
+    ) {
+      await window.sharedAudioContext.resume();
+    }
+
     if (!content || !name) {
       alert("請填寫完整記憶標題及內容");
       return;

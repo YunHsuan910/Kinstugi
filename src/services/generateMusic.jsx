@@ -27,11 +27,15 @@ if (!window.sharedAudioContext) {
 
 async function generateMusic(promptText) {
   return new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      reject(new Error("生成音樂超時，請檢查網路連線"));
+    }, 30000);
+
     let chunksArray = []; // 用來存所有的 Uint8Array 小塊
     let accumulatedLength = 0; // 追蹤總長度
 
-    // allSamples = new Int16Array(0); // 每次重新金繕時清空
-    // let internalBuffer = new Uint8Array(0);
+    // 清理舊的狀態
+    const cleanup = () => clearTimeout(timeout);
 
     if (!window.sharedAudioContext) {
       window.sharedAudioContext = new (
@@ -54,21 +58,16 @@ async function generateMusic(promptText) {
                 chunksArray.push(newData);
                 accumulatedLength += newData.length;
 
-                // let temp = new Uint8Array(
-                //   internalBuffer.length + newData.length,
-                // );
-                // temp.set(internalBuffer);
-                // temp.set(newData, internalBuffer.length);
-                // internalBuffer = temp;
-
+                // 到達目標長度
                 if (accumulatedLength >= TOTAL_TARGET_SIZE) {
-                  // 停止即時串流，避免干擾
+                  cleanup(); // 成功了，先清除 timeout
+
                   if (currentSession) {
                     currentSession.stop();
                     currentSession = null;
                   }
 
-                  // 一次性合併所有數據
+                  // 合併數據
                   const fullBuffer = new Uint8Array(accumulatedLength);
                   let offset = 0;
                   for (const c of chunksArray) {
@@ -76,25 +75,26 @@ async function generateMusic(promptText) {
                     offset += c.length;
                   }
 
-                  // 關鍵修改：確保我們只取偶數長度的數據（因為 1 個 Int16 = 2 個 Uint8）
                   const length = Math.floor(fullBuffer.length / 2) * 2;
                   const slicedBuffer = fullBuffer.slice(0, length);
                   allSamples = new Int16Array(slicedBuffer.buffer);
 
-                  setTimeout(() => {
-                    startLoopingPlayback();
-                    resolve(true);
-                  }, 0);
+                  // 確保啟動播放不影響 resolve 流程
+                  startLoopingPlayback();
+                  resolve(true);
                 }
               }
             }
           },
           onerror: (error) => {
+            cleanup();
             console.error("Lyria Session 錯誤:", error);
             reject(error);
           },
-          onclose: (event) =>
-            console.log("連線關閉代碼:", event.code, "理由:", event.reason),
+          onclose: (event) => {
+            cleanup();
+            console.log("連線關閉代碼:", event.code, "理由:", event.reason);
+          },
         },
       })
       .then(async (session) => {
@@ -120,6 +120,7 @@ async function generateMusic(promptText) {
         await session.play();
       })
       .catch((err) => {
+        cleanup();
         reject(err);
       });
   });
