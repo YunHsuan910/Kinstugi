@@ -1,4 +1,5 @@
 import React from "react";
+// import { motion } from "motion/react";
 
 //組件匯入
 import EnterTrigger from "./EnterTrigger";

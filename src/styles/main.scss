@@ -66,7 +66,7 @@ h2 {
         height: max-content;
         justify-content: space-between;
         .content-text {
-            line-height: Min(8vh, 8vw);
+            line-height: Min(8vh, 10vw);
             letter-spacing: Min(0.6vh, 0.5vw);
             color: $color-text-accent-white;
         }
@@ -110,6 +110,7 @@ h2 {
             display: flex;
             width: 100%;
             textarea {
+                display: block;
                 min-height: 10vh;
                 overflow-y: hidden;
             }
@@ -165,10 +166,9 @@ h2 {
         }
     }
     .process-content {
-        // min-height: 70vh;
         justify-content: center;
         .process-status-text {
-            font-size: Min(2.5vh, 2.5vw);
+            font-size: Min(2.5vh, 4vw);
             letter-spacing: Min(0.2vw, 0.2em);
             margin: Min(2.5vh, 2.5vw) 0;
         }
@@ -182,11 +182,12 @@ h2 {
         }
     }
     .result-content {
-        max-width: Min(70vw, 30em);
-        min-height: 70vh;
+        margin: 0;
+        padding: 0;
+        max-width: Min(70vw, 50vh);
         justify-content: flex-start;
         .btn-wrap {
-            margin-top: Min(1vh, 1vw);
+            margin-top: Min(3vh, 3vw);
             display: flex;
             justify-content: space-evenly;
             align-items: center;
@@ -376,15 +377,22 @@ h2 {
         align-items: center;
         .photo {
             width: 100%;
-            max-width: Min(70vw, 35vh);
+            max-width: Min(50vw, 35vh);
+            filter: blur(5px);
+            animation: blurToClear 0.8s ease-in-out 0.5s forwards;
         }
         .words {
             width: 100%;
             max-width: Min(70vw, 50vh);
         }
+        .motto {
+            text-align: left;
+        }
         .secret-mail {
             .mail {
                 font-size: Min(2vh, 3vw);
+                font-family: $font-family-serif;
+                font-style: italic;
                 display: flex;
                 animation: reveal 0.5s ease-in-out;
             }
@@ -393,6 +401,7 @@ h2 {
             }
             .reveal-mail {
                 display: none;
+                letter-spacing: Min(0.2vw, 0.2vh);
             }
             &:hover {
                 .hide-mail {

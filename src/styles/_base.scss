@@ -57,9 +57,19 @@ p {
 .form-text {
     font-size: Min(2vh, 5vw);
 }
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3); // 淡淡的黑影，可以增加氛圍感
+    backdrop-filter: blur(3px); // 加入毛玻璃效果，符合你的美學
+    z-index: 99; // 確保在所有內容之上，但在 Menu 之下
+}
 .menu {
     position: fixed;
-    z-index: 5;
+    z-index: 100;
     top: 0;
     right: 0;
     .icon-wrap {
@@ -206,7 +216,7 @@ p {
     .slogan {
         width: 100%;
         max-width: 100%;
-        font-size: Min(2.5vh, 5vw);
+        font-size: Min(2.5vh, 4vw);
         max-height: 6vh;
         word-break: keep-all;
         word-wrap: break-word;
@@ -235,7 +245,7 @@ p {
 }
 .form {
     margin: 0 auto;
-    padding: Min(2vh,3vw) Min(2vh,5vw) Min(3vh,5vw);
+    padding: Min(2vh, 3vw) Min(2vh, 5vw) Min(3vh, 5vw);
     width: 100%;
     max-width: 50em;
     height: auto;

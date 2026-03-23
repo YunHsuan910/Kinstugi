@@ -14,12 +14,13 @@ import RecordProcessing from "../components/RecordProcessing";
 import ResultView from "../components/ResultView"; // 需建立結果播放組件
 
 //Service匯入
-import { generateMusic, stopMusic } from "../services/generateMusic";
+import { generateMusic } from "../services/generateMusic";
 import { generatePrompt } from "../services/generatePrompt";
 
 function CeremonyPage() {
   // 頁面流程狀態：input (輸入), process (生成中), result (結果)
   const [step, setStep] = useState("input");
+  const [repairStatus, setRepairStatus] = useState(""); // 存放進度文字
 
   // 要上傳的檔案類別：text (文字, image (圖片)
   const [inputType, setInputType] = useState("text");
@@ -62,17 +63,22 @@ function CeremonyPage() {
     setStep("process");
 
     try {
+      setRepairStatus("正在從裂痕中，擷取記憶的殘響...");
       // 第一步：AI 分析情緒並產出音樂風格指令
       const musicPrompt = await generatePrompt(content, inputType, name);
       setPrompt(musicPrompt);
       console.log("AI 判斷的音樂風格：", musicPrompt);
 
+      setRepairStatus("正在將裂痕轉化為音符...");
       const musicResult = await generateMusic(musicPrompt);
       setMusicData(musicResult);
 
+      setRepairStatus("金繕完成，正在開啟回憶之門...");
       // 完成音樂後進入結果頁
       console.log("準備進入結果頁...");
-      setStep("result");
+      setTimeout(() => {
+        setStep("result");
+      }, 800);
     } catch (error) {
       console.error("金繕修復失敗:", error);
       alert("修復過程發生錯誤，請稍後再試", error);
@@ -173,7 +179,7 @@ function CeremonyPage() {
           </form>
         </motion.main>
       )}
-      {step === "process" && <RecordProcessing />}
+      {step === "process" && <RecordProcessing status={repairStatus}/>}
       {step === "result" && (
         <ResultView
           memoryName={name}

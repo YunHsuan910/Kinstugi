@@ -45,10 +45,10 @@ function GatePage() {
             祝福你有跨越一切的勇氣
           </motion.p>
           <EnterTrigger
-            targetPath={null}
-            onComplete={() => setView("login")}
+            targetPath={"/ceremony"}
+            onComplete={null}
             mainText="簽訂契約"
-            subText="REGISTER"
+            subText="TO CEREMONY"
           />
         </main>
       )}

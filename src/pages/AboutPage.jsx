@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
+import { motion } from "motion/react";
 
 //圖檔匯入
 import title from "../assets/about-title.png";
@@ -9,7 +11,12 @@ import Background from "../components/Background";
 
 function AboutPage() {
   return (
-    <div className="about-container container">
+    <motion.div
+      className="about-container container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.5 }}
+    >
       <div className="title">
         <img src={title} alt="虛無檔案" />
         <p className="slogan">裂痕為引，重鑄心緒，聆聽光音</p>
@@ -38,7 +45,7 @@ function AboutPage() {
       </div>
 
       <Background />
-    </div>
+    </motion.div>
   );
 }
 

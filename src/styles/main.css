@@ -126,9 +126,21 @@ p {
   font-size: Min(2vh, 5vw);
 }
 
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: blur(3px);
+          backdrop-filter: blur(3px);
+  z-index: 99;
+}
+
 .menu {
   position: fixed;
-  z-index: 5;
+  z-index: 100;
   top: 0;
   right: 0;
 }
@@ -307,7 +319,7 @@ p {
 .title .slogan {
   width: 100%;
   max-width: 100%;
-  font-size: Min(2.5vh, 5vw);
+  font-size: Min(2.5vh, 4vw);
   max-height: 6vh;
   word-break: keep-all;
   word-wrap: break-word;
@@ -884,6 +896,28 @@ p {
   }
 }
 
+@-webkit-keyframes blurToClear {
+  0% {
+    -webkit-filter: blur(5px) brightness(1.4);
+            filter: blur(5px) brightness(1.4);
+  }
+  100% {
+    -webkit-filter: blur(0) brightness(1);
+            filter: blur(0) brightness(1);
+  }
+}
+
+@keyframes blurToClear {
+  0% {
+    -webkit-filter: blur(5px) brightness(1.4);
+            filter: blur(5px) brightness(1.4);
+  }
+  100% {
+    -webkit-filter: blur(0) brightness(1);
+            filter: blur(0) brightness(1);
+  }
+}
+
 .text-gold {
   color: #c5a059;
 }
@@ -972,7 +1006,7 @@ h2 {
 }
 
 .gate-container .main-content .content-text {
-  line-height: Min(8vh, 8vw);
+  line-height: Min(8vh, 10vw);
   letter-spacing: Min(0.6vh, 0.5vw);
   color: #fff;
 }
@@ -1021,6 +1055,7 @@ h2 {
 }
 
 .ceremony-container .main-content .memory-content textarea {
+  display: block;
   min-height: 10vh;
   overflow-y: hidden;
 }
@@ -1103,7 +1138,7 @@ h2 {
 }
 
 .ceremony-container .process-content .process-status-text {
-  font-size: Min(2.5vh, 2.5vw);
+  font-size: Min(2.5vh, 4vw);
   letter-spacing: Min(0.2vw, 0.2em);
   margin: Min(2.5vh, 2.5vw) 0;
 }
@@ -1122,15 +1157,16 @@ h2 {
 }
 
 .ceremony-container .result-content {
-  max-width: Min(70vw, 30em);
-  min-height: 70vh;
+  margin: 0;
+  padding: 0;
+  max-width: Min(70vw, 50vh);
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
 }
 
 .ceremony-container .result-content .btn-wrap {
-  margin-top: Min(1vh, 1vw);
+  margin-top: Min(3vh, 3vw);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1429,7 +1465,11 @@ h2 {
 
 .about-container .about-content .photo {
   width: 100%;
-  max-width: Min(70vw, 35vh);
+  max-width: Min(50vw, 35vh);
+  -webkit-filter: blur(5px);
+          filter: blur(5px);
+  -webkit-animation: blurToClear 0.8s ease-in-out 0.5s forwards;
+          animation: blurToClear 0.8s ease-in-out 0.5s forwards;
 }
 
 .about-container .about-content .words {
@@ -1437,8 +1477,14 @@ h2 {
   max-width: Min(70vw, 50vh);
 }
 
+.about-container .about-content .motto {
+  text-align: left;
+}
+
 .about-container .about-content .secret-mail .mail {
   font-size: Min(2vh, 3vw);
+  font-family: "Kintusgi", "Noto Serif TC", "Times New Roman", Times, serif;
+  font-style: italic;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1452,6 +1498,7 @@ h2 {
 
 .about-container .about-content .secret-mail .reveal-mail {
   display: none;
+  letter-spacing: Min(0.2vw, 0.2vh);
 }
 
 .about-container .about-content .secret-mail:hover .hide-mail {

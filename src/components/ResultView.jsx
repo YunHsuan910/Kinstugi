@@ -145,7 +145,7 @@ function ResultView({ memoryName }) {
         </div>
         <span className="divider-line"></span>
         <div className="btn-text change-view-btn" onClick={handleSave}>
-          儲存記憶
+          收藏記憶
         </div>
         <span className="divider-line"></span>
         <div className="btn-text change-view-btn" onClick={handleDownload}>
