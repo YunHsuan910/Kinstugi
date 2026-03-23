@@ -3,7 +3,8 @@ import { motion } from "motion/react";
 
 //圖檔匯入
 import title from "../assets/landing-title.png";
-import heroBg from "../assets/hero-bg.webp";
+import heroBgDesktop from "../assets/hero-bg.mp4";
+import heroBgMobile from "../assets/hero-bg-m.mp4";
 
 //組件匯入
 import EnterTrigger from "../components/EnterTrigger";
@@ -36,7 +37,30 @@ function LandingPage() {
         />
       </main>
       <div className="bg-wrap">
-        <img className="bg-video" src={heroBg} alt="" />
+        <video
+          className="bg-video"
+          autoPlay    // 自動播放
+          loop        // 循環播放
+          muted       // 必須靜音，否則大部分瀏覽器拒絕自動播放
+          playsInline // 關鍵：防止 iPhone 上跳出全螢幕播放器
+          // poster={heroBgPoster} // 選填：在影片下載前顯示這張圖
+        >
+          {/* 電腦版 (螢幕大於 768px 時下載) */}
+          <source
+            src={heroBgDesktop}
+            type="video/mp4"
+            media="(min-width: 769px)"
+          />
+
+          {/* 手機版 (螢幕小於或等於 768px 時下載) */}
+          <source
+            src={heroBgMobile}
+            type="video/mp4"
+            media="(max-width: 768px)"
+          />
+
+        </video>
+        {/* <img className="bg-video" src={heroBg} alt="" /> */}
       </div>
     </div>
   );

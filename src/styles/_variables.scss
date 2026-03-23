@@ -15,10 +15,17 @@ $color-icon-hover: #8c6b3b; // icon hover色
 // 字體設定 (Typography)
 @font-face {
     font-family: "Kintusgi"; /* 你自己取的字體名稱 */
-    src: url("./assets/fonts/NotoSerifTC-Regular.ttf") format("ttf");
-    font-weight: normal;
+    src: url("../assets/fonts/NotoSerifTC-Regular.ttf") format("truetype");
+    font-weight: 500;
     font-style: normal;
     font-display: swap; /* 關鍵：確保字體還沒載入時先顯示預設字體，避免白屏 */
+}
+@font-face {
+    font-family: "Kintusgi";
+    src: url("../assets/fonts/NotoSerifTC-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
 }
 $font-family-serif:
     "Kintusgi", "Noto Serif TC", "Times New Roman", Times, serif; // 襯線體，適用於標題、Slogan（需依專案引入的字體修改）

@@ -2,8 +2,8 @@
 @font-face {
   font-family: "Kintusgi";
   /* 你自己取的字體名稱 */
-  src: url("./assets/fonts/NotoSerifTC-Regular.ttf") format("ttf");
-  font-weight: normal;
+  src: url("../assets/fonts/NotoSerifTC-Regular.ttf") format("truetype");
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
   /* 關鍵：確保字體還沒載入時先顯示預設字體，避免白屏 */
@@ -11,9 +11,17 @@
 
 @font-face {
   font-family: "Kintusgi";
+  src: url("../assets/fonts/NotoSerifTC-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kintusgi";
   /* 你自己取的字體名稱 */
-  src: url("./assets/fonts/NotoSerifTC-Regular.ttf") format("ttf");
-  font-weight: normal;
+  src: url("../assets/fonts/NotoSerifTC-Regular.ttf") format("truetype");
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
   /* 關鍵：確保字體還沒載入時先顯示預設字體，避免白屏 */
@@ -21,12 +29,28 @@
 
 @font-face {
   font-family: "Kintusgi";
+  src: url("../assets/fonts/NotoSerifTC-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kintusgi";
   /* 你自己取的字體名稱 */
-  src: url("./assets/fonts/NotoSerifTC-Regular.ttf") format("ttf");
-  font-weight: normal;
+  src: url("../assets/fonts/NotoSerifTC-Regular.ttf") format("truetype");
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
   /* 關鍵：確保字體還沒載入時先顯示預設字體，避免白屏 */
+}
+
+@font-face {
+  font-family: "Kintusgi";
+  src: url("../assets/fonts/NotoSerifTC-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
 *,
@@ -655,11 +679,19 @@ p {
 @font-face {
   font-family: "Kintusgi";
   /* 你自己取的字體名稱 */
-  src: url("./assets/fonts/NotoSerifTC-Regular.ttf") format("ttf");
-  font-weight: normal;
+  src: url("../assets/fonts/NotoSerifTC-Regular.ttf") format("truetype");
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
   /* 關鍵：確保字體還沒載入時先顯示預設字體，避免白屏 */
+}
+
+@font-face {
+  font-family: "Kintusgi";
+  src: url("../assets/fonts/NotoSerifTC-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
 @-webkit-keyframes jumping {
