@@ -198,7 +198,7 @@ p {
     align-items: center;
     img {
         width: auto;
-        height: 20vh;
+        // height: 20vh;
         max-width: 100%;
         max-height: fit-content;
         object-fit: contain;
@@ -235,7 +235,7 @@ p {
 }
 .form {
     margin: 0 auto;
-    padding: Min(3vh, 3vw) Min(5vh, 5vw) Min(5vh, 5vw);
+    padding: Min(2vh,3vw) Min(2vh,5vw) Min(3vh,5vw);
     width: 100%;
     max-width: 50em;
     height: stretch;

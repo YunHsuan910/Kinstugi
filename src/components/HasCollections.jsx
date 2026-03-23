@@ -29,7 +29,7 @@ function HasCollections({ memories }) {
   const startTimeRef = useRef(0); // 本次開始播放的起始時間點
 
   const filteredMemories = memories.filter((item) =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    item.name.toLowerCase().includes(searchTerm.toLowerCase().trim()),
   );
   const handleSearch = (e) => {
     const value = e.target.value;
