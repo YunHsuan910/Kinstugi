@@ -1218,7 +1218,7 @@ h2 {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 100% !important;
+  width: 50em !important;
   max-width: calc(100% / 3) !important;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
