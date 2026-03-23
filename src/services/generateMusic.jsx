@@ -27,8 +27,11 @@ if (!window.sharedAudioContext) {
 
 async function generateMusic(promptText) {
   return new Promise((resolve, reject) => {
-    allSamples = new Int16Array(0); // 每次重新金繕時清空
-    let internalBuffer = new Uint8Array(0);
+    let chunksArray = []; // 用來存所有的 Uint8Array 小塊
+    let accumulatedLength = 0; // 追蹤總長度
+
+    // allSamples = new Int16Array(0); // 每次重新金繕時清空
+    // let internalBuffer = new Uint8Array(0);
 
     if (!window.sharedAudioContext) {
       window.sharedAudioContext = new (
@@ -48,30 +51,40 @@ async function generateMusic(promptText) {
             if (message.serverContent?.audioChunks) {
               for (const chunk of message.serverContent.audioChunks) {
                 const newData = base64ToUint8(chunk.data);
-                let temp = new Uint8Array(
-                  internalBuffer.length + newData.length,
-                );
-                temp.set(internalBuffer);
-                temp.set(newData, internalBuffer.length);
-                internalBuffer = temp;
+                chunksArray.push(newData);
+                accumulatedLength += newData.length;
 
-                if (internalBuffer.length >= TOTAL_TARGET_SIZE) {
+                // let temp = new Uint8Array(
+                //   internalBuffer.length + newData.length,
+                // );
+                // temp.set(internalBuffer);
+                // temp.set(newData, internalBuffer.length);
+                // internalBuffer = temp;
 
+                if (accumulatedLength >= TOTAL_TARGET_SIZE) {
                   // 停止即時串流，避免干擾
                   if (currentSession) {
                     currentSession.stop();
                     currentSession = null;
                   }
 
-                  // 關鍵修改：確保我們只取偶數長度的數據（因為 1 個 Int16 = 2 個 Uint8）
-                  const length = Math.floor(internalBuffer.length / 2) * 2;
-                  const slicedBuffer = internalBuffer.slice(0, length);
+                  // 一次性合併所有數據
+                  const fullBuffer = new Uint8Array(accumulatedLength);
+                  let offset = 0;
+                  for (const c of chunksArray) {
+                    fullBuffer.set(c, offset);
+                    offset += c.length;
+                  }
 
-                  // 重新建立一個 Int16Array，這會強制進行正確的數據映射
+                  // 關鍵修改：確保我們只取偶數長度的數據（因為 1 個 Int16 = 2 個 Uint8）
+                  const length = Math.floor(fullBuffer.length / 2) * 2;
+                  const slicedBuffer = fullBuffer.slice(0, length);
                   allSamples = new Int16Array(slicedBuffer.buffer);
 
-                  startLoopingPlayback();
-                  resolve(true);
+                  setTimeout(() => {
+                    startLoopingPlayback();
+                    resolve(true);
+                  }, 0);
                 }
               }
             }
@@ -150,33 +163,68 @@ function startLoopingPlayback() {
   const left = audioBuffer.getChannelData(0);
   const right = audioBuffer.getChannelData(1);
 
-  for (let i = 0; i < numPairs; i++) {
-    left[i] = (allSamples[i * 2] / 32768.0);
-    right[i] = (allSamples[i * 2 + 1] / 32768.0);
-  }
+  // --- 優化點：分段填充數據 ---
+  const chunkSize = 20000; // 每次處理 2 萬個採樣點
+  let i = 0;
 
-  if (loopSource) {
-    try {
-      loopSource.stop();
-    } catch (err) {
-      console.err(err);
+  function fillBuffer() {
+    const end = Math.min(i + chunkSize, numPairs);
+    for (; i < end; i++) {
+      left[i] = allSamples[i * 2] / 32768.0;
+      right[i] = allSamples[i * 2 + 1] / 32768.0;
+    }
+
+    if (i < numPairs) {
+      // 還有數據，下一幀繼續，不阻塞 UI
+      requestAnimationFrame(fillBuffer);
+    } else {
+      // 填充完畢，開始播放
+      if (loopSource) {
+        try {
+          loopSource.stop();
+        } catch (err) {
+          console.error(err);
+        }
+      }
+      loopSource = ctx.createBufferSource();
+      loopSource.buffer = audioBuffer;
+      loopSource.loop = true;
+      loopSource.connect(ctx.destination);
+
+      if (ctx.state === "suspended") ctx.resume();
+      loopSource.start(ctx.currentTime + 0.1);
     }
   }
 
-  loopSource = ctx.createBufferSource();
-  loopSource.buffer = audioBuffer;
-  loopSource.loop = true;
-  loopSource.connect(ctx.destination);
+  fillBuffer(); // 開始分段填充
 
-  // 關鍵修改：使用 AudioContext 的內建時間軸來延遲啟動
-  // ctx.currentTime 是當前時間，+ 0.3 代表從現在起往後跳 0.3 秒才發聲
-  const startTime = ctx.currentTime + 0.3;
+  // for (let i = 0; i < numPairs; i++) {
+  //   left[i] = allSamples[i * 2] / 32768.0;
+  //   right[i] = allSamples[i * 2 + 1] / 32768.0;
+  // }
 
-  if (ctx.state === "suspended") {
-    ctx.resume();
-  }
+  // if (loopSource) {
+  //   try {
+  //     loopSource.stop();
+  //   } catch (err) {
+  //     console.err(err);
+  //   }
+  // }
 
-  loopSource.start(startTime); // 在 0.3 秒後精準啟動
+  // loopSource = ctx.createBufferSource();
+  // loopSource.buffer = audioBuffer;
+  // loopSource.loop = true;
+  // loopSource.connect(ctx.destination);
+
+  // // 關鍵修改：使用 AudioContext 的內建時間軸來延遲啟動
+  // // ctx.currentTime 是當前時間，+ 0.3 代表從現在起往後跳 0.3 秒才發聲
+  // const startTime = ctx.currentTime + 0.3;
+
+  // if (ctx.state === "suspended") {
+  //   ctx.resume();
+  // }
+
+  // loopSource.start(startTime); // 在 0.3 秒後精準啟動
 }
 
 //將 Base64 字串轉換為二進位位元組陣列 (Uint8Array)

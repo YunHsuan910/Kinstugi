@@ -612,7 +612,7 @@ p {
   font-weight: 600;
   -webkit-transform: scaleY(1.1);
           transform: scaleY(1.1);
-  -webkit-line-clamp: 1;
+  line-clamp: 1;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

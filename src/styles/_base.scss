@@ -444,7 +444,7 @@ p {
         font-family: $font-family-serif;
         font-weight: 600;
         transform: scaleY(1.1);
-        -webkit-line-clamp: 1;
+        line-clamp: 1;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
