@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import title from "../assets/landing-title.png";
 import heroBgDesktop from "../assets/hero-bg.mp4";
 import heroBgMobile from "../assets/hero-bg-m.mp4";
+import heroBgPoster from "../assets/hero-bg-m.webp";
 
 //組件匯入
 import EnterTrigger from "../components/EnterTrigger";
@@ -43,7 +44,7 @@ function LandingPage() {
           loop        // 循環播放
           muted       // 必須靜音，否則大部分瀏覽器拒絕自動播放
           playsInline // 關鍵：防止 iPhone 上跳出全螢幕播放器
-          // poster={heroBgPoster} // 選填：在影片下載前顯示這張圖
+          poster={heroBgPoster} // 選填：在影片下載前顯示這張圖
         >
           {/* 電腦版 (螢幕大於 768px 時下載) */}
           <source
