@@ -125,14 +125,20 @@ async function generateMusic(promptText) {
 
 // 控制暫停與播放的功能
 async function toggleMusic(shouldPlay) {
-  if (!audioContext) return;
+  const ctx = window.sharedAudioContext || audioContext;
+  if (!ctx) return;
 
   if (shouldPlay) {
-    // 恢復 AudioContext 的時間軸跳動
-    await audioContext.resume();
+    // 如果 loopSource 已經存在且正在跑，就不要重複建立
+    if (ctx.state === "suspended") {
+      await ctx.resume();
+    } else if (!loopSource) {
+      // 如果沒有光源，才重新建立
+      startLoopingPlayback();
+    }
   } else {
-    // 掛起 AudioContext，這會讓所有正在播放與排程中的 Buffer 停止輸出
-    await audioContext.suspend();
+    // 暫停時，你可以選擇掛起 Context (省資源)
+    await ctx.suspend();
   }
 }
 
@@ -156,6 +162,18 @@ function startLoopingPlayback() {
   // 再次確保使用最新的 Context
   const ctx = window.sharedAudioContext || audioContext;
 
+  // --- 關鍵修正：建立新音軌前，先徹底殺掉舊的 ---
+  if (loopSource) {
+    try {
+      loopSource.stop(); // 停止播放
+      loopSource.disconnect(); // 中斷連線
+    } catch (e) {
+      // 防止 source 已經停止過而噴錯
+      console.log("清理舊音軌時的預期錯誤:", e);
+    }
+    loopSource = null;
+  }
+
   const numPairs = Math.floor(allSamples.length / 2);
   const audioBuffer = ctx.createBuffer(2, numPairs, SAMPLE_RATE);
   const left = audioBuffer.getChannelData(0);
@@ -173,17 +191,14 @@ function startLoopingPlayback() {
     }
 
     if (i < numPairs) {
-      // 還有數據，下一幀繼續，不阻塞 UI
       requestAnimationFrame(fillBuffer);
     } else {
-      // 填充完畢，開始播放
+      // 再次確認：在最後啟動前，防止在填充期間使用者又點了播放導致重複
       if (loopSource) {
-        try {
-          loopSource.stop();
-        } catch (err) {
-          console.error(err);
-        }
+        loopSource.stop();
+        loopSource.disconnect();
       }
+
       loopSource = ctx.createBufferSource();
       loopSource.buffer = audioBuffer;
       loopSource.loop = true;
@@ -196,33 +211,6 @@ function startLoopingPlayback() {
 
   fillBuffer(); // 開始分段填充
 
-  // for (let i = 0; i < numPairs; i++) {
-  //   left[i] = allSamples[i * 2] / 32768.0;
-  //   right[i] = allSamples[i * 2 + 1] / 32768.0;
-  // }
-
-  // if (loopSource) {
-  //   try {
-  //     loopSource.stop();
-  //   } catch (err) {
-  //     console.err(err);
-  //   }
-  // }
-
-  // loopSource = ctx.createBufferSource();
-  // loopSource.buffer = audioBuffer;
-  // loopSource.loop = true;
-  // loopSource.connect(ctx.destination);
-
-  // // 關鍵修改：使用 AudioContext 的內建時間軸來延遲啟動
-  // // ctx.currentTime 是當前時間，+ 0.3 代表從現在起往後跳 0.3 秒才發聲
-  // const startTime = ctx.currentTime + 0.3;
-
-  // if (ctx.state === "suspended") {
-  //   ctx.resume();
-  // }
-
-  // loopSource.start(startTime); // 在 0.3 秒後精準啟動
 }
 
 //將 Base64 字串轉換為二進位位元組陣列 (Uint8Array)

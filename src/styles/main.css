@@ -1366,6 +1366,9 @@ h2 {
 }
 
 .collection-container .collections-content .collections-wrap .control-btns-wrap svg {
+  display: block;
+  width: Min(3vh, 5vw);
+  height: Min(3vh, 5vw);
   fill: #c5a059;
 }
 

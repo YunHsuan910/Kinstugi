@@ -331,6 +331,9 @@ h2 {
                 justify-content: center;
                 align-items: center;
                 svg {
+                    display: block;
+                    width: Min(3vh, 5vw);
+                    height: Min(3vh, 5vw);
                     fill: $color-primary-gold;
                 }
                 .control-btn {
