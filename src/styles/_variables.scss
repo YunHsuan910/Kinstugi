@@ -13,6 +13,13 @@ $color-btn-shadow: #463213; //按鈕厚度色
 $color-icon-hover: #8c6b3b; // icon hover色
 
 // 字體設定 (Typography)
+@font-face {
+    font-family: "Noto Serif TC"; /* 你自己取的字體名稱 */
+    src: url("./assets/fonts/NotoSerifTC-Regular.ttf") format("ttf");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; /* 關鍵：確保字體還沒載入時先顯示預設字體，避免白屏 */
+}
 $font-family-serif:
     "Noto Serif TC", "Times New Roman", Times, serif; // 襯線體，適用於標題、Slogan（需依專案引入的字體修改）
 $font-family-sans: "Noto Sans CJK TC", "Arial", sans-serif; // 無襯線體，適用於表單、內文

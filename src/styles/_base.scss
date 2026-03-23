@@ -145,7 +145,7 @@ p {
     }
 
     .nav-wrap {
-        padding: Min(10vh, 15vw) Min(3vh, 3vw);
+        padding: Min(10vh, 15vw) Min(3vh, 5vw);
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -160,7 +160,7 @@ p {
             animation: slideInRight 0.2s ease-in;
             text-align: center;
             letter-spacing: Min(0.3vh, 0.3vw);
-            font-size: Min(2vh, 5vw);
+            font-size: Min(2.5vh, 6vw);
             color: #fff;
             &:hover {
                 filter: brightness(1.4);
@@ -355,7 +355,7 @@ p {
         margin: 1vh auto 0;
         color: $color-text-accent-gray;
         * {
-            letter-spacing: Min(0.4vh, 0.7vw);
+            letter-spacing: Min(0.4vh, 0.5dvw);
             text-indent: Min(0.4vh, 1vw);
         }
         .main-text {
@@ -377,7 +377,7 @@ p {
     margin: Min(1vh, 1vw) auto;
     width: 100%;
     height: auto;
-    max-width: Min(90vw, 30em);
+    max-width: Min(80vw, 30em);
     position: relative;
     .record {
         position: absolute;
