@@ -33,6 +33,7 @@ function CeremonyPage() {
 
   // 音樂生成狀態
   const [musicData, setMusicData] = useState(null);
+  const [memoryContent, setMemoryContent] = useState("");
 
   // 儲存等待提示文字
   const ritualSteps = [
@@ -42,12 +43,28 @@ function CeremonyPage() {
     "將碎片編織成悠揚的旋律...",
     "記得打開鈴聲傾聽回憶之聲...",
   ];
-  const [stepIndex, setStepIndex] = useState(0);
 
   // 處理圖片上傳後的狀態同步
   const handleImageChange = (file, previewUrl) => {
     setContent(file); // 儲存 File 物件供 API 使用
     setFileSrc(previewUrl); // 儲存預覽圖
+    const reader = new FileReader();
+
+    // 開始讀取檔案
+    reader.readAsDataURL(file);
+    // 讀取完成後的動作
+    reader.onload = () => {
+      const base64String = reader.result; // 這才是我們要的字串
+
+      // 更新 state，傳給 ResultView 的 content 必須是這個字串
+      setMemoryContent(base64String);
+      setInputType("image");
+    };
+
+    reader.onerror = (error) => {
+      console.error("圖片轉換失敗:", error);
+      alert("圖片讀取失敗，請重新上傳");
+    };
   };
 
   // 生成音樂
@@ -70,6 +87,7 @@ function CeremonyPage() {
     }
 
     let timerId = null;
+
     // 進入處理畫面
     setStep("process");
 
@@ -177,7 +195,10 @@ function CeremonyPage() {
                         name="upload-memory-text"
                         className="form-text"
                         value={content}
-                        onChange={(e) => setContent(e.target.value)}
+                        onChange={(e) => {
+                          setContent(e.target.value);
+                          setMemoryContent(e.target.value);
+                        }}
                         placeholder="輸入詳細的記憶，完成後長按開始記憶金繕，我們會用魔法將記憶淬鍊成黑膠唱片，邀請你聆聽並試著用不同的觀點感受那份回憶，祝你一切順利！"
                       />
                     </div>
@@ -205,7 +226,8 @@ function CeremonyPage() {
         <ResultView
           memoryName={name}
           musicPrompt={prompt}
-          memoryContent={content}
+          memoryContent={memoryContent}
+          inputType={inputType}
           musicData={musicData}
         />
       )}

@@ -16,7 +16,6 @@ import { getMemoryByIdFromDB, deleteMemoryFromDB } from "../services/dbService";
 import { downloadMusic } from "../services/downloadMusic";
 
 function HasCollections({ memories, setMemories }) {
-  console.log(memories);
   const [searchTerm, setSearchTerm] = useState("");
 
   // --- 播放器與 Swiper 狀態 ---

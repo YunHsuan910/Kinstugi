@@ -12,7 +12,7 @@ import { stopMusic, getGeneratedSamples } from "../services/generateMusic";
 import { downloadMusic } from "../services/downloadMusic";
 import { saveMemoryToDB } from "../services/dbService";
 
-function ResultView({ memoryName, memoryContent }) {
+function ResultView({ memoryName, memoryContent,inputType }) {
   const navigate = useNavigate();
 
   // 音樂播放的狀態
@@ -77,6 +77,7 @@ function ResultView({ memoryName, memoryContent }) {
     const newMemory = {
       name: memoryName,
       content: memoryContent,
+      contentType: inputType,
       samples: samples,
       sampleRate: sampleRate,
       timestamp: new Date().toISOString(),
