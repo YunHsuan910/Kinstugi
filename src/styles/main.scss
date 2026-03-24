@@ -368,6 +368,8 @@ h2 {
                         .memory-content-wrapper {
                             position: relative;
                             width: 100%;
+                            height: 100%;
+                            max-width: 100%;
                             max-height: 100%;
                             overflow: clip;
                             .original-text {
@@ -378,6 +380,11 @@ h2 {
                                 text-wrap: wrap;
                                 text-overflow: ellipsis;
                                 overflow-wrap: break-word;
+                            }
+                            img{
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
                             }
                         }
                     }
