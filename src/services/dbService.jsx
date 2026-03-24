@@ -52,3 +52,14 @@ export const getMemoryByIdFromDB = async (id) => {
     request.onerror = () => reject(request.error);
   });
 };
+
+export const deleteMemoryFromDB = async (id) => {
+  const db = await initDB(); // 確保這能取得你的 IndexedDB 實例
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction("memories", "readwrite");
+    const store = transaction.objectStore("memories");
+    const request = store.delete(id);
+    request.onsuccess = () => resolve(true);
+    request.onerror = () => reject(false);
+  });
+};

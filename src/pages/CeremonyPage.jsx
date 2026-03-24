@@ -34,6 +34,16 @@ function CeremonyPage() {
   // 音樂生成狀態
   const [musicData, setMusicData] = useState(null);
 
+  // 儲存等待提示文字
+  const ritualSteps = [
+    "正在聆聽裂痕中的私語...",
+    "正在收集碎裂的記憶...",
+    "調製金色的修補靈魂液...",
+    "將碎片編織成悠揚的旋律...",
+    "記得打開鈴聲傾聽回憶之聲...",
+  ];
+  const [stepIndex, setStepIndex] = useState(0);
+
   // 處理圖片上傳後的狀態同步
   const handleImageChange = (file, previewUrl) => {
     setContent(file); // 儲存 File 物件供 API 使用
@@ -59,6 +69,7 @@ function CeremonyPage() {
       return;
     }
 
+    let timerId = null;
     // 進入處理畫面
     setStep("process");
 
@@ -69,11 +80,20 @@ function CeremonyPage() {
       setPrompt(musicPrompt);
       console.log("AI 判斷的音樂風格：", musicPrompt);
 
-      setRepairStatus("正在將裂痕轉化為音符...");
+      // 每2秒播放下一句
+      let currentIndex = 0;
+      timerId = window.setInterval(() => {
+        currentIndex = (currentIndex + 1) % ritualSteps.length;
+        setRepairStatus(ritualSteps[currentIndex]);
+      }, 2000);
+
       const musicResult = await generateMusic(musicPrompt);
       setMusicData(musicResult);
 
+      // 清除計時器
+      if (timerId) clearInterval(timerId);
       setRepairStatus("金繕完成，正在開啟回憶之門...");
+
       // 完成音樂後進入結果頁
       console.log("準備進入結果頁...");
       setTimeout(() => {
@@ -134,6 +154,7 @@ function CeremonyPage() {
                       onClick={() => {
                         setInputType("text");
                         setContent("");
+                        setFileSrc(null);
                       }}
                     >
                       文字
@@ -179,11 +200,12 @@ function CeremonyPage() {
           </form>
         </motion.main>
       )}
-      {step === "process" && <RecordProcessing status={repairStatus}/>}
+      {step === "process" && <RecordProcessing status={repairStatus} />}
       {step === "result" && (
         <ResultView
           memoryName={name}
           musicPrompt={prompt}
+          memoryContent={content}
           musicData={musicData}
         />
       )}

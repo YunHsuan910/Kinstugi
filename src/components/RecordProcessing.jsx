@@ -9,8 +9,10 @@ function RecordProcessing({ status }) {
     <div className="main-content process-content">
       <motion.p
         className="process-status-text"
+        key={status}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 5 }}
         transition={{ duration: 0.8 }}
       >
         {status}

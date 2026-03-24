@@ -48,7 +48,7 @@ function CollectionPage() {
       </div>
 
       {memories.length > 0 ? (
-        <HasCollections memories={memories} />
+        <HasCollections memories={memories} setMemories={setMemories}/>
       ) : (
         <NoCollection />
       )}

@@ -5,7 +5,7 @@ import FingerPrintDrawing from "./FingerPrintDrawing";
 function EnterTrigger({ targetPath, onComplete, mainText, subText }) {
   const timerRef = useRef(null); // 儲存定時器 ID
   const [isPressing, setIsPressing] = useState(false);
-  const HOLD_DURATION = 1500; //長按時間設定
+  const HOLD_DURATION = 1000; //長按時間設定
   const navigate = useNavigate();
 
   const handleTouchStart = () => {

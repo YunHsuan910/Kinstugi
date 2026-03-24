@@ -918,6 +918,58 @@ p {
   }
 }
 
+@-webkit-keyframes flipToBack {
+  0% {
+    -webkit-transform: scale(0, 0.9) rotateZ(3deg);
+            transform: scale(0, 0.9) rotateZ(3deg);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1, 1) rotateZ(0deg);
+            transform: scale(1, 1) rotateZ(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes flipToBack {
+  0% {
+    -webkit-transform: scale(0, 0.9) rotateZ(3deg);
+            transform: scale(0, 0.9) rotateZ(3deg);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1, 1) rotateZ(0deg);
+            transform: scale(1, 1) rotateZ(0deg);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes flipToFront {
+  0% {
+    -webkit-transform: scale(1, 1) rotateZ(0deg);
+            transform: scale(1, 1) rotateZ(0deg);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(0, 0.9) rotateZ(-3deg);
+            transform: scale(0, 0.9) rotateZ(-3deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flipToFront {
+  0% {
+    -webkit-transform: scale(1, 1) rotateZ(0deg);
+            transform: scale(1, 1) rotateZ(0deg);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(0, 0.9) rotateZ(-3deg);
+            transform: scale(0, 0.9) rotateZ(-3deg);
+    opacity: 0;
+  }
+}
+
 .text-gold {
   color: #c5a059;
 }
@@ -1308,6 +1360,19 @@ h2 {
   margin: 0 auto;
 }
 
+.collection-container .collections-content .collections-wrap .filter-notice {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 45dvh;
+}
+
 .collection-container .collections-content .collections-wrap .swiper-wrapper {
   width: 100%;
 }
@@ -1367,6 +1432,86 @@ h2 {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+}
+
+.collection-container .collections-content .collections-wrap .swiper-wrapper .flip-card {
+  position: relative;
+  background-color: transparent;
+  width: 100%;
+  height: auto;
+  -webkit-perspective: 1000px;
+          perspective: 1000px;
+}
+
+.collection-container .collections-content .collections-wrap .swiper-wrapper .flip-card .click-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  background: transparent;
+  z-index: 10;
+}
+
+.collection-container .collections-content .collections-wrap .swiper-wrapper .flip-card .flip-card-back {
+  display: none;
+}
+
+.collection-container .collections-content .collections-wrap .swiper-wrapper .flip-card .flip-to-front {
+  -webkit-animation: flipToFront 0.3s linear forwards;
+          animation: flipToFront 0.3s linear forwards;
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+}
+
+.collection-container .collections-content .collections-wrap .swiper-wrapper .flip-card .flip-to-back {
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  -webkit-animation: flipToBack 0.3s linear forwards;
+          animation: flipToBack 0.3s linear forwards;
+}
+
+.collection-container .collections-content .collections-wrap .swiper-wrapper .flipped .flip-card-back {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: absolute;
+  color: #0a0a0a;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(45deg, #8c6b3b 10%, #f2d391, #8c6b3b 90%);
+  border-radius: 0.5em;
+  padding: Min(3vw, 3vh);
+  -webkit-box-shadow: 3px -3px 3px #624210 inset, -3px 3px 1px #f2d391 inset;
+          box-shadow: 3px -3px 3px #624210 inset, -3px 3px 1px #f2d391 inset;
+}
+
+.collection-container .collections-content .collections-wrap .swiper-wrapper .flipped .flip-card-back .memory-content-wrapper {
+  position: relative;
+  width: 100%;
+  max-height: 100%;
+  overflow: clip;
+}
+
+.collection-container .collections-content .collections-wrap .swiper-wrapper .flipped .flip-card-back .memory-content-wrapper .original-text {
+  width: 100%;
+  height: 100%;
+  word-break: break-all;
+  white-space: nowrap;
+  text-wrap: wrap;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
 }
 
 .collection-container .collections-content .collections-wrap .swiper-button-prev,
@@ -1440,8 +1585,8 @@ h2 {
   padding: Min(1.5vh, 3vw);
   border-radius: 99em;
   border: 1px solid #c5a059;
-  -webkit-box-shadow: 0 5px 0 #463213;
-          box-shadow: 0 5px 0 #463213;
+  -webkit-box-shadow: 0 5px 0 #624210;
+          box-shadow: 0 5px 0 #624210;
   background: linear-gradient(45deg, #0a0a0a 10%, #2f2f2f, #0a0a0a 90%);
 }
 
